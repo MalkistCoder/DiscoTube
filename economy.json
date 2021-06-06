@@ -1,0 +1,29 @@
+{
+   "banks": {
+        "768674429819027456": {
+            "subs": 27,
+            "money": 1000,
+            "inventory": {}
+        },
+        "718109447825915946": {
+            "subs": 2046,
+            "money": 1000,
+            "inventory": {}
+        }
+    },
+
+
+
+"trends": [
+        "Minecraft",
+        "Challenge",
+        "Prank",
+        "DiscoTube Shorts",
+        "Music",
+        "Other Newbie Gaming",
+        "Vlog",
+        "Travel Vlog",
+        "Fortnite",
+        "Food Eating Challenge"
+    ]
+}
