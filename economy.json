@@ -1,29 +1,57 @@
 {
-   "banks": {
+    "banks": {
         "768674429819027456": {
-            "subs": 27,
-            "money": 1000,
+            "subs": 503693998638431857814657877147717,
+            "money": 20481500000000001186530416657384,
             "inventory": {}
         },
         "718109447825915946": {
-            "subs": 2046,
+            "subs": 1e69,
+            "money": 1e69,
+            "inventory": {}
+        },
+        "795133155241361428": {
+            "subs": 88000,
+            "money": 1000,
+            "inventory": {}
+        },
+        "739137468871475251": {
+            "subs": 56310299999999998796769991361298432,
             "money": 1000,
             "inventory": {}
         }
     },
-
-
-
-"trends": [
-        "Minecraft",
-        "Challenge",
-        "Prank",
-        "DiscoTube Shorts",
-        "Music",
-        "Other Newbie Gaming",
-        "Vlog",
-        "Travel Vlog",
-        "Fortnite",
-        "Food Eating Challenge"
+    "trends": {
+        "Minecraft": 0.9,
+        "Challenge": 0.8,
+        "Prank": 0.8,
+        "DiscoTube Shorts": 1.0,
+        "Music": 0.6,
+        "Other Newbie Gaming": 0.5,
+        "Vlog": 0.5,
+        "Travel Vlog": 0.5,
+        "Fortnite": 0.1,
+        "Food Eating Challenge": 0.1,
+        "Roasting DiscoTube": 1e-09,
+        "DiscoTube Tutorial": 1.0,
+        "Math": 0.987654321,
+        "How to pronounce the word `pneumonoultramicroscopicsilicovolcanoconiosis` whilst solving the Pythagoras theorem if `x = 3, y = 4`": 0.9,
+        "How To 1+1=11": 1e-09
+    },
+    "sponsors": [
+        "GWZ Hate",
+        "DisCoin",
+        "Fugifers Co.",
+        "Your actual mom",
+        "Dis Co.",
+        "Twittsco",
+        "<@!849597692581904405>",
+        "Doney",
+        "DiscoVPN",
+        "DiscoShare",
+        "Disco Shave Club",
+        "DiscoGeek",
+        "Audiscle",
+        "Drilliant"
     ]
 }

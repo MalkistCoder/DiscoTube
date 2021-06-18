@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "repl_python3_DiscoTube"
+name = "DiscoTube"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
@@ -9,6 +9,8 @@ python = "^3.8"
 discord = "^1.0.1"
 flask = "^2.0.1"
 express = "^1.0"
+conwech = "^2020.8"
+colorama = "^0.4.4"
 
 [tool.poetry.dev-dependencies]
 

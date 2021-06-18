@@ -61,11 +61,21 @@ colorama = "*"
 [[package]]
 category = "main"
 description = "Cross-platform colored terminal text."
-marker = "platform_system == \"Windows\""
 name = "colorama"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.4.4"
+
+[[package]]
+category = "main"
+description = "A module for reading & writing numbers using the Conway-Wechsler naming system"
+name = "conwech"
+optional = false
+python-versions = ">=3.4"
+version = "2020.8"
+
+[package.dependencies]
+colorama = "*"
 
 [[package]]
 category = "main"
@@ -197,7 +207,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "c2f4b8af28186e3fdd989882cb27c544b8e1fd50e86fa04978d35d4968596a0f"
+content-hash = "95c2a6bed93161ac73e425782d8ed81ec5a5192ffc08b0acb1c817932d19af40"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -259,6 +269,10 @@ click = [
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
+]
+conwech = [
+    {file = "conwech-2020.8-py3-none-any.whl", hash = "sha256:1ad13850035262053ac6eca859ab11f9b14750d40096fa41d183fdff9977897a"},
+    {file = "conwech-2020.8.tar.gz", hash = "sha256:b12038d971146c1f14bb335a248bae44723a2002a2759f4d0eebbb3f549b5c72"},
 ]
 discord = [
     {file = "discord-1.0.1-py3-none-any.whl", hash = "sha256:9d4debb4a37845543bd4b92cb195bc53a302797333e768e70344222857ff1559"},
