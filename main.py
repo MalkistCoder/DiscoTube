@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-import json
 from webserver import keep_alive
 import random as rng
 import os

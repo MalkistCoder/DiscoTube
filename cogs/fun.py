@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord
 import json,os
 import random as rng
-from PIL import image,ImageFont,ImageDraw
+from PIL import Image,ImageFont,ImageDraw
 from io import BytesIO
 
 class Fun(commands.Cog):
@@ -46,14 +46,22 @@ class Fun(commands.Cog):
      
     #stonks image generation
     @commands.command(aliases=['st','sto','stocks',])
-    async def stonk(ctx):
-        pass
+    async def stonkaaa(self,ctx):
 
-       
+	    stonk = Image.open("stonksmage.jpg")
 
+	    draw = ImageDraw.Draw(stonk)
+	    font = ImageFont.truetype("calibrib.ttf", 11)
 
+	    price = "$250 P/Dsc"
 
+	    status = "Production > Demand"
 
+	    draw.text((211,64), price, (255, 255, 255), font=font)
+	    draw.text((18,97), status, (255, 255, 255), font=font)
+	    stonk.save("stonkletts.jpg")
+
+	    await ctx.send(file = discord.File("stonkletts.jpg"))
 
 
 

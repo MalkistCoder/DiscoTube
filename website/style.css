@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,600");
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,400i,700");
+
+#title {
+    font-family: Montserrat, sans-serif;
+}
+
+#apis a {
+    text-decoration: none;
+    color: rebeccapurple;
+}
+
+#apis {
+    font-family: Raleway, sans-serif;
+}
+
+.tutorial {
+    font-family: Raleway, sans-serif;
+}
+
+.tutorial h3 {
+    font-weight: 600
+}

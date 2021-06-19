@@ -31,5 +31,23 @@ class Moderation(commands.Cog):
             await ctx.send(f'{member.mention} was banned. Good riddance!')
             await ctx.guild.ban(member,reason=f'Banned by {ctx.author.display_name} for {reason}')
 
+    #have no perms idiot
+    @commands.Cog.listener('on_command_error')
+    async def on_command_error(self,ctx,error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("Ayo bro you know a Thing Called **PERMS**??")
+        elif isinstance(error,commands.CommandOnCooldown):
+            embed = discord.Embed(
+                title='Stop spamming commands!',
+                description=f'{ctx.author.mention}, wait about {round(error.retry_after)} before you try using the {ctx.command.name} command again.',
+                color=0x663399
+            )
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(str(type(error))+'\n'+str(error))
+            raise error
+
+
+
 def setup(bot):
     bot.add_cog(Moderation(bot))

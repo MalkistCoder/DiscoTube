@@ -3,22 +3,30 @@
         "768674429819027456": {
             "subs": 503693998638431857814657877147717,
             "money": 20481500000000001186530416657384,
-            "inventory": {}
+            "inventory": {},
+            "has_registered_discoin_account": false,
+            "discoin_bal": 0
         },
         "718109447825915946": {
-            "subs": 1e69,
-            "money": 1e69,
-            "inventory": {}
+            "subs": 2.0614407e+69,
+            "money": 1.0318432210000002e+69,
+            "inventory": {},
+            "has_registered_discoin_account": false,
+            "discoin_bal": 1e+69
         },
         "795133155241361428": {
             "subs": 88000,
             "money": 1000,
-            "inventory": {}
+            "inventory": {},
+            "has_registered_discoin_account": false,
+            "discoin_bal": 0
         },
         "739137468871475251": {
             "subs": 56310299999999998796769991361298432,
             "money": 1000,
-            "inventory": {}
+            "inventory": {},
+            "has_registered_discoin_account": false,
+            "discoin_bal": 0
         }
     },
     "trends": {

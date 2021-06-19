@@ -1,11 +1,16 @@
 from discord.ext import commands, tasks
 from discord.ext.commands.cooldowns import BucketType
 from math import floor,sin,cos,tan,sqrt
+from colorama import Fore, Fore, Style
+from colorama import init as clrinit
 import datetime
 import discord
 import random
 import sys,os
 import json
+
+
+clrinit(autoreset=True)
 
 
 #adds accounts for user
@@ -19,45 +24,62 @@ async def add_account(memberid: int):
         banks['banks'][str(memberid)]['subs'] = 0
         banks['banks'][str(memberid)]['money'] = 1000
         banks['banks'][str(memberid)]['inventory'] = {}
+        banks['banks'][str(memberid)]['has_registered_discoin_account'] = False,
+        banks['banks'][str(memberid)]['discoin_bal'] = 0 
         with open('economy.json', 'w') as f:
             json.dump(banks, f, indent=4)
+
+
+
 
 @tasks.loop(seconds=60)
 async def discoin_price():
     with open('economy-dc.json','r') as f:
         dcoin = json.load(f)
+        
     if dcoin['exists'] == True:
         dcoin['time_it_existed'] += 1
+
         #main stoof
+
         time_up = dcoin['time_it_existed']
         price_b4 = dcoin['price']
-        buys,sells = None,None
+        buys,sells = dcoin['buys_this_minute'],dcoin['sells_this_minute']
         price_now = None
-        if dcoin['buys_this_minute'] > dcoin['sells_this_minute']:
+
+        if dcoin['buys_this_minute'] > dcoin['sells_this_minute']: # More buys
             dcoin['price'] += round(dcoin['buys_this_minute']/1.5)
-            buys = dcoin['buys_this_minute']
-            sells=dcoin['sells_this_minute']
             price_now = price_b4 + round(dcoin['buys_this_minute']/1.5)
-            print(f'Minute {time_up}: {buys} buys & {sells} sells, Price: {price_now}, used to be {price_b4}')
-        elif dcoin['buys_this_minute'] < dcoin['sells_this_minute']:
+
+            print(f'Minute {Fore.CYAN}{time_up}{Style.RESET_ALL}: {Fore.GREEN}{buys} buys{Style.RESET_ALL} {Style.DIM}&{Style.RESET_ALL} {Fore.RED}{sells} sells{Style.RESET_ALL}, Price: {Fore.YELLOW}{price_now}{Style.RESET_ALL}, used to be {Fore.YELLOW}{price_b4}{Style.RESET_ALL}')
+
+        elif dcoin['buys_this_minute'] < dcoin['sells_this_minute']: # More sells
             dcoin['price'] -= round(dcoin['sells_this_minute']/1.5)
-            print(f'Minute {time_up}: {buys} buys & {sells} sells, Price: {price_now}, used to be {price_b4}')
-        else:
-            print(f'Minute {time_up}: {buys} buys & {sells} sells, Price: {price_now}, used to be {price_b4}')
+            price_now = price_b4 + round(dcoin['buys_this_minute']/1.5)
+
+            print(f'Minute {Fore.CYAN}{time_up}{Style.RESET_ALL}: {Fore.GREEN}{buys} buys{Style.RESET_ALL} {Style.DIM}&{Style.RESET_ALL} {Fore.RED}{sells} sells{Style.RESET_ALL}, Price: {Fore.YELLOW}{price_now}{Style.RESET_ALL}, used to be {Fore.YELLOW}{price_b4}{Style.RESET_ALL}')
+
+        else: # Same price, nothing changes.
+            price_now = price_b4 + round(dcoin['buys_this_minute']/1.5)
+            print(f'Minute {Fore.CYAN}{time_up}{Style.RESET_ALL}: {Fore.GREEN}{buys} buys{Style.RESET_ALL} {Style.DIM}&{Style.RESET_ALL} {Fore.RED}{sells} sells{Style.RESET_ALL}, Price: {Fore.YELLOW}{price_now}{Style.RESET_ALL}, used to be {Fore.YELLOW}{price_b4}{Style.RESET_ALL}')
+            
         dcoin['buys_this_minute'], dcoin['sells_this_minute'] = 0, 0
+
+
         with open('economy-dc.json','w') as f:
             json.dump(dcoin,f,indent=4)
     else:
-        print('DisCoin is off, 0 buys and 0 sells this minute')
+        print(f'{Style.DIM}DisCoin is off.')
     
-
-
 
 # idk what it does
 # It defines the cog lol
 class Economy(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+
+
 
 
     #balance command
@@ -79,8 +101,27 @@ class Economy(commands.Cog):
         embed.add_field(name='Money :',
                         value='$'+str(banks['banks'][str(member.id)]['money']),
                         inline=False)
+        embed.add_field(name='DisCoins :',value=f'<:discoin:855657870531624990>'+str(banks['banks'][str(member.id)]['discoin_bal']))
+
+        if banks['banks'][str(member.id)]['subs'] > 1e12:
+            embed.set_footer('OMG GUYS ITS PEWDIEPIE 2')
+        elif 1e9 < banks['banks'][str(member.id)]['subs'] <= 1e12:
+            embed.set_footer('OMG GUYS ITS PEWDIEPIE')
+        elif 1e6 < banks['banks'][str(member.id)]['subs'] <= 1e9:
+            embed.set_footer(f'Oh, you don\'t know who {member.mention} is? \*intense distorted voice\* **I**T***S*** **J**U***S***T **S**O***M***E **D**U***D***E**!**')
+        elif 1e5 < banks['banks'][str(member.id)]['subs'] <= 1e6:
+            embed.set_footer('😏')
+        elif 1e3 < banks['banks'][str(member.id)]['subs'] <= 1e5:
+            embed.set_footer(f'Not, bad, but {member.mention} has to grind a bit more')
+        elif banks['banks'][str(member.id)]['subs'] <= 1e3:
+            embed.set_footer(f'He\'s trying to find a way to break the youtube algorithm')
+        
 
         await ctx.reply(embed=embed)
+
+
+
+
 
     #user uploads videos and gets some sweet revenue.. . .
     @commands.command(aliases=[
@@ -92,6 +133,9 @@ class Economy(commands.Cog):
         with open('economy.json', 'r') as f:
             banks = json.load(f)
        
+
+
+
 
        
         #Video Choices and the complex system
@@ -116,6 +160,8 @@ class Economy(commands.Cog):
         subs = banks['banks'][str(ctx.author.id)]['subs']
 
         
+
+
         #Give revenue System
         if did_succeed:
             views = round((random.randint(100, 200) / 100) * (7.5 + subs) * random.randint(85, 115) / 100)
@@ -128,6 +174,8 @@ class Economy(commands.Cog):
             banks['banks'][str(ctx.author.id)]['subs'] += subs_gained
             banks['banks'][str(ctx.author.id)]['money'] += ad_revenue
         
+
+
             #Sends the fin msg
             await ctx.reply(
                 f'You chose to do a {vid_chs[last_message-1]} video! You got {views} views and gained {subs_gained}, You also got ${ad_revenue} from the ads.', mention_author=False
@@ -147,6 +195,8 @@ class Economy(commands.Cog):
 
             await ctx.reply(
                 f'You chose to do a {vid_chs[last_message-1]} video! Your video didn\'t do quite well, so you {verb_add_or_subtract_subscribers} {abs(unsubs)} subscribers. You didn\'t get any ad revenue from the ads. . . . Sad Bro.')
+
+
 
 
         
@@ -187,10 +237,34 @@ class Economy(commands.Cog):
     
     @commands.cooldown(1,100,BucketType.guild)
     @commands.command(name='discoinaccount',aliases=['discoina','discaccount','disca','dcoinaccount','dcoina','dcaccount','dca'])
-    async def _discoin(self):
+    async def _discoin(self,ctx):
         with open('economy.json','r') as f:
             banks = json.load(f)
+        if not banks['banks'][str(ctx.author.id)]['has_registered_discoin_account']:
+            banks['banks'][str(ctx.author.id)]['has_registered_discoin_account'] = True
+            await ctx.reply('Well done! You have registered a DisCoin account. Good luck!')
+        with open('economy-dc.json','w') as f:
+            json.dump(banks,f,indent=4)
+    
+    @commands.command()
+    async def buydiscoin(self,ctx,amt:int=1):
+        with open('economy.json') as f:
+            banks = json.load(f)
+        with open('economy-dc.json') as f:
+            dcoin = json.load(f)
         
+    
+        
+
+    #@commands.command()
+    #async def stonk(self,ctx):
+	#    embedio = discord.Embed(
+    #        title="This Hour's Stonks !", 
+    #        color=0xeb5534
+    #    )
+    #    embedio.add_field(name="Price = ", value="$250 P/Dsc")
+    #    embedio.add_field(name="Status = ", value="Production > Demand")		
+    #await ctx.reply(embed=embedio)
 
 
 def setup(bot):

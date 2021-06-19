@@ -6,37 +6,31 @@ app = Flask('')
 
 @app.route('/')
 def home():
-  return 'Webserver, Check . Bot, Check'
+    return 'Bot is on. If you are looking for the API, go <a href=\'/api\'>here</a>'
 
 @app.route('/api')
 def api():
-  return '''<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta property="og:title" content="DiscoTube API">
-    <meta property="og:description" content="Welcome to the DiscoTube API!">
-    <title>DiscoTube API Home Page</title>
-  </head>
-  <body>
-    <h1 id="title">DISCOTUBE API</h1>
-    <ul id="apis">
-      <li>Currency Stats: here</li>
-      <li>Cog Levels: here</li>
-      <li>Currency Shop: here</li>
-      <li>8Ball Brain: Coming Soon!</li>
-    </ul>
-  </body>
-</html>'''
+    with open('website/'+'api.html','r') as f:
+        website = f.read()
+    return website
 
-@app.route('/api/levels')
-def api_levels():
-  return json.load(open('economy.json','r'))[request.args.get('memberid')]
+@app.route('/api/economy')
+def api_economy():
+    with open('economy.json','r') as f:
+        banks = json.load(f)
+    memberid = request.args.get('memberid', default = 1, type = int)
+    return banks['banks'][str(memberid)]
 
+@app.route('/api/discoin')
+@app.route('/api/dc')
+def api_dc():
+    with open('economy-dc.json','r') as f:
+        banks = json.load(f)
+    return banks
 
 def run():
-  app.run(host='0.0.0.0',port=8080)
+    app.run(host='0.0.0.0',port=80)
 
 def keep_alive():
-  t = Thread(target=run)
-  t.start()
+    t = Thread(target=run)
+    t.start()
